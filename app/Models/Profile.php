@@ -25,34 +25,4 @@ class Profile extends Model
     {
         return $this->hasOne(PoliceStation::class, 'location_id', 'location_id');
     }
-    public static function sendSMS($mobile_no, $message)
-    {
-        try {            
-            
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "http://sms3.pondit.com:7788/sendtext?apikey=d72012d5a83441db&secretkey=57b95570&callerID=12345&toUser=".$mobile_no."&messageContent=".urlencode ($message),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-            ));
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-        
-            curl_close($curl);
-        
-            if ($err) {
-                //echo "cURL Error #:" . $err;
-                return false;
-            } else {
-                //echo $response;
-                return true;
-            }
-           
-
-        } catch (Exception $th) {
-            return redirect()->back()->withErrors($th->getMessage());
-        }
-
-    }
 }
